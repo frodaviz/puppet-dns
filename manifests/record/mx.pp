@@ -3,7 +3,8 @@ define dns::record::mx (
   $data,
   $ttl = '',
   $preference = '0',
-  $host = $name ) {
+  $host = $name,
+  $custom_order = '002' ) {
 
   $alias = "${host},MX,${zone}"
 
@@ -14,6 +15,8 @@ define dns::record::mx (
     record     => 'MX',
     preference => $preference,
     data       => "${data}.",
-    order      => 2
+    order      => $custom_order
   }
 }
+
+

@@ -1,8 +1,8 @@
-;
+; 
 ; BIND data file for <%= zone %> zone.
 ; File managed by puppet.
 ;
-$ORIGIN	<%= zone %>.
+$ORIGIN	<%= origin_e %>.
 $TTL	<%= zone_ttl %>
 @	IN	SOA	<%= soa %>. <%= soa_email %>. (
 		<%= zone_serial %>		; Serial
@@ -11,7 +11,9 @@ $TTL	<%= zone_ttl %>
 		<%= zone_expire %>		; Expire
 		<%= zone_minimum %>	)	; Negative Cache TTL
 ;
+
 <% nameservers.each do |nameserver| -%>
 @		IN	NS	<%= nameserver %>.
 <% end -%>
 ;
+

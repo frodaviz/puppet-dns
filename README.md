@@ -2,7 +2,7 @@
 
 Module for provisioning DNS (bind9)
 
-Tested on Ubuntu 12.04, patches to support other operating systems are welcome.
+Tested on Centos 6.4
 
 This module depends on concat (https://github.com/ripienaar/puppet-concat).
 
@@ -79,6 +79,10 @@ Tweak and add the following to your site manifest:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+# new feature
+ dynamic dns
+ manual zones form file
 
 ## License
 

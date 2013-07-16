@@ -1,8 +1,11 @@
 <% 
+spc_l=12
+spc_s=5
+
 delimiter = %w[TXT SPF].include?(record.upcase) ? '"' : ''
-data_a = data.is_a?(String) ? data.lines.to_a : data
+data_a = datae.is_a?(String) ? datae.lines.to_a : datae
 
 data_a.each do |data_item| 
 -%>
-<%= host %>	<%= ttl %>	<%= dns_class %>	<%= record.upcase %><%= record.upcase == 'MX' ? " #{preference}" : '' %>	<%= delimiter %><%= data_item %><%= delimiter %>
+<%= hoste.ljust(spc_l) %> <%= ttl.ljust(spc_l) %> <%= dns_class.ljust(spc_s) %> <%= record.upcase.ljust(spc_s) %> <%= record.upcase == 'MX' ? " #{preference}" : '' %>	<%= delimiter %> <%= data_item.ljust(spc_l) %> <%= delimiter %>
 <% end -%>

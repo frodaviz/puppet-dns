@@ -3,8 +3,32 @@ zone "<%= zone %>" {
 <% if zone_notify -%>
   notify <%= zone_notify %>;
 <% end -%>
+<% if link_file -%>
   file "<%= zone_file %>";
+<% end -%>
 <% if zone_type == 'slave' -%>
   masters { <%= slave_masters %>;};
+<% end -%>
+<% if zone_type == 'master' -%>
+  <% if ! slaves.empty? -%>
+  allow-transfer {
+<% slaves.each do |slaves| -%>
+      <%= slaves %>;
+<% end -%>
+    };<% end -%>
+<% if ! acls.empty? %>
+    allow-query {
+<% acls.each do |acls| -%>
+      <%= acls %>;
+<% end -%>
+    };
+<% end -%>
+<% if ! updaters.empty? %>
+    allow-update {
+<% updaters.each do |updaters| -%>
+      key "<%= updaters %>";
+<% end -%>
+    };
+<% end -%>
 <% end -%>
 };

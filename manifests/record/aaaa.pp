@@ -2,7 +2,8 @@ define dns::record::aaaa (
   $zone,
   $data,
   $ttl = '',
-  $host = $name ) {
+  $host = $name,
+  $custom_order = '090' ) {
 
   $alias = "${host},AAAA,${zone}"
 
@@ -11,6 +12,7 @@ define dns::record::aaaa (
     host   => $host,
     ttl    => $ttl,
     record => 'AAAA',
-    data   => $data
+    data   => $data,
+    order  => $custom_order
   }
 }

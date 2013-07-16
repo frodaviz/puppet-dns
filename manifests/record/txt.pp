@@ -2,7 +2,8 @@ define dns::record::txt (
   $zone,
   $data,
   $ttl = '',
-  $host = $name) {
+  $host = $name,
+  $custom_order = '090' ) {
 
   $alias = "${host},TXT,${zone}"
 
@@ -11,6 +12,8 @@ define dns::record::txt (
     host   => $host,
     ttl    => $ttl,
     record => 'TXT',
-    data   => $data
+    data   => $data,
+    order  => $custom_order
   }
 }
+

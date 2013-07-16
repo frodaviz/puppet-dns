@@ -1,7 +1,6 @@
 class dns::server::install {
 
-  package { 'bind9':
+  package { "$dns::config_os::package_name":
     ensure => latest,
   }
-
 }

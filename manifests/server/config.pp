@@ -1,24 +1,36 @@
 class dns::server::config {
 
-  file { '/etc/bind':
+  file { "$dns::config_os::conf_folder":
     ensure => directory,
-    owner  => 'bind',
-    group  => 'bind',
+    owner  => $dns::config_os::owner_os,
+    group  => $dns::config_os::group_os,
     mode   => '0755',
   }
 
-  file { '/etc/bind/named.conf':
-    ensure  => present,
-    owner   => 'bind',
-    group   => 'bind',
+  concat { "$dns::config_os::conf_folder/named1.conf":
+    owner   => $dns::config_os::owner_os,
+    group   => $dns::config_os::group_os,
     mode    => '0644',
-    require => [File['/etc/bind'], Class['dns::server::install']],
-    notify  => Class['dns::server::service'],
+    require => Class['concat::setup'],
+    #notify  => Class['dns::server::service']
+  }
+  concat::fragment{'named.conf.header':
+    ensure  => present,
+    target  => "$dns::config_os::conf_folder/named1.conf",
+    order   => 001,
+    content => "#
+# File managed by Puppet.
+#
+
+#include \"$dns::config_os::conf_folder/named.conf.options\";
+#include \"$dns::config_os::conf_folder/named.conf.local\";
+#include \"$dns::config_os::conf_folder/named.conf.default-zones\";
+"
   }
 
-  concat { '/etc/bind/named.conf.local':
-    owner   => 'bind',
-    group   => 'bind',
+  concat { "$dns::config_os::conf_folder/named.conf.local":
+    owner   => $dns::config_os::owner_os,
+    group   => $dns::config_os::group_os,
     mode    => '0644',
     require => Class['concat::setup'],
     notify  => Class['dns::server::service']
@@ -26,9 +38,10 @@ class dns::server::config {
 
   concat::fragment{'named.conf.local.header':
     ensure  => present,
-    target  => '/etc/bind/named.conf.local',
-    order   => 1,
-    content => "// File managed by Puppet.\n"
+    target  => "$dns::config_os::conf_folder/named.conf.local",
+    order   => 001,
+    content => "#\n#File managed by Puppet.\n#\n"
   }
 
 }
+
